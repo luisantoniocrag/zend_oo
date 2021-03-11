@@ -555,10 +555,9 @@ UniValue listbanned(const UniValue& params, bool fHelp)
             "If there are no banned IPs, it will return an empty array.\n"
             "\nResult:\n"
             "{\n"
-            "    \"address\" : xxx:xxx      (string) IP/Subnet\n",
+            "     \"address\" : \"xxxxxx\"      (numeric) IP/Subnet,\n"
             "     \"banned_until\" : tttt   (numeric) time in seconds how long the ip is banned\n"
             "}\n"
-            "\nExamples:\n"
             + HelpExampleCli("listbanned", "")
             + HelpExampleRpc("listbanned", "")
         );
