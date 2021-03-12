@@ -205,7 +205,7 @@ UniValue getblockcount(const UniValue& params, bool fHelp)
             "getblockcount\n"
             "\nReturns the number of blocks in the longest block chain.\n"
             "\nResult:\n"
-            "n    (numeric) The current block count\n"
+            "n    (numeric) the current block count\n"
             "\nExamples:\n"
             + HelpExampleCli("getblockcount", "")
             + HelpExampleRpc("getblockcount", "")
@@ -220,7 +220,7 @@ UniValue getbestblockhash(const UniValue& params, bool fHelp)
     if (fHelp || params.size() != 0)
         throw runtime_error(
             "getbestblockhash\n"
-            "\nReturns the hash of the best (tip) block in the longest block chain.\n"
+            "\nReturns the hash of the best (most recent) block in the longest block chain.\n"
             "\nResult\n"
             "\"hex\"      (string) the block hash hex encoded\n"
             "\nExamples\n"
@@ -239,7 +239,7 @@ UniValue getdifficulty(const UniValue& params, bool fHelp)
             "getdifficulty\n"
             "\nReturns the proof-of-work difficulty as a multiple of the minimum difficulty.\n"
             "\nResult:\n"
-            "n.nnn       (numeric) the proof-of-work difficulty as a multiple of the minimum difficulty.\n"
+            "nnnn      (numeric) the proof-of-work difficulty as a multiple of the minimum difficulty\n"
             "\nExamples:\n"
             + HelpExampleCli("getdifficulty", "")
             + HelpExampleRpc("getdifficulty", "")
@@ -329,23 +329,23 @@ UniValue getrawmempool(const UniValue& params, bool fHelp)
             "getrawmempool ( verbose )\n"
             "\nReturns all transaction ids in memory pool as a json array of string transaction ids.\n"
             "\nArguments:\n"
-            "1. verbose           (boolean, optional, default=false) true for a json object, false for array of transaction ids\n"
+            "1. verbose                             (boolean, optional, default=false) true for a json object, false for array of transaction ids\n"
             "\nResult: (for verbose = false):\n"
-            "[                     (json array of string)\n"
-            "  \"transactionid\"     (string) The transaction id\n"
+            "[                                      (json array of string)\n"
+            "  \"transactionid\" : \"hash\"         (string) the transaction id\n"
             "  ,...\n"
             "]\n"
             "\nResult: (for verbose = true):\n"
-            "{                           (json object)\n"
-            "  \"transactionid\" : {       (json object)\n"
-            "    \"size\" : n,             (numeric) transaction size in bytes\n"
-            "    \"fee\" : n,              (numeric) transaction fee in " + CURRENCY_UNIT + "\n"
-            "    \"time\" : n,             (numeric) local time transaction entered pool in seconds since 1 Jan 1970 GMT\n"
-            "    \"height\" : n,           (numeric) block height when transaction entered pool\n"
-            "    \"startingpriority\" : n, (numeric) priority when transaction entered pool\n"
-            "    \"currentpriority\" : n,  (numeric) transaction priority now\n"
-            "    \"depends\" : [           (array) unconfirmed transactions used as inputs for this transaction\n"
-            "        \"transactionid\",    (string) parent transaction id\n"
+            "{                                      (json object)\n"
+            "  \"transactionid\" : {                (json object)\n"
+            "    \"size\" : n,                      (numeric) transaction size in bytes\n"
+            "    \"fee\" : n,                       (numeric) transaction fee in " + CURRENCY_UNIT + "\n"
+            "    \"time\" : n,                      (numeric) local time transaction entered pool in seconds since 1 Jan 1970 GMT\n"
+            "    \"height\" : n,                    (numeric) block height when transaction entered pool\n"
+            "    \"startingpriority\" : n,          (numeric) priority when transaction entered pool\n"
+            "    \"currentpriority\" : n,           (numeric) transaction priority now\n"
+            "    \"depends\" : [                    (array) unconfirmed transactions used as inputs for this transaction\n"
+            "        \"transactionid\", : \"hash\"  (string) parent transaction id\n"
             "       ... ]\n"
             "  }, ...\n"
             "}\n"
@@ -370,9 +370,9 @@ UniValue getblockhash(const UniValue& params, bool fHelp)
             "getblockhash index\n"
             "\nReturns hash of block in best-block-chain at index provided.\n"
             "\nArguments:\n"
-            "1. index         (numeric, required) The block index\n"
+            "1. index         (numeric, required) the block index\n"
             "\nResult:\n"
-            "\"hash\"         (string) The block hash\n"
+            "\"hash\"         (string) the block hash\n"
             "\nExamples:\n"
             + HelpExampleCli("getblockhash", "1000")
             + HelpExampleRpc("getblockhash", "1000")
@@ -396,27 +396,29 @@ UniValue getblockheader(const UniValue& params, bool fHelp)
             "\nIf verbose is false, returns a string that is serialized, hex-encoded data for blockheader 'hash'.\n"
             "If verbose is true, returns an Object with information about blockheader <hash>.\n"
             "\nArguments:\n"
-            "1. \"hash\"          (string, required) The block hash\n"
-            "2. verbose           (boolean, optional, default=true) true for a json object, false for the hex encoded data\n"
+            "1. \"hash\"                          (string, required) The block hash\n"
+            "2. verbose                           (boolean, optional, default=true) true for a json object, false for the hex encoded data\n"
             "\nResult (for verbose = true):\n"
             "{\n"
-            "  \"hash\" : \"hash\",     (string) the block hash (same as provided)\n"
-            "  \"confirmations\" : n,   (numeric) The number of confirmations, or -1 if the block is not on the main chain\n"
-            "  \"height\" : n,          (numeric) The block height or index\n"
-            "  \"version\" : n,         (numeric) The block version\n"
-            "  \"merkleroot\" : \"xxxx\", (string) The merkle root\n"
-            "  \"time\" : ttt,          (numeric) The block time in seconds since epoch (Jan 1 1970 GMT)\n"
-            "  \"nonce\" : n,           (numeric) The nonce\n"
-            "  \"bits\" : \"1d00ffff\", (string) The bits\n"
-            "  \"difficulty\" : x.xxx,  (numeric) The difficulty\n"
-            "  \"previousblockhash\" : \"hash\",  (string) The hash of the previous block\n"
-            "  \"nextblockhash\" : \"hash\"       (string) The hash of the next block\n"
+            "  \"hash\" : \"hash\",               (string) the block hash (same as provided)\n"
+            "  \"confirmations\" : n,             (numeric) the number of confirmations, or -1 if the block is not on the main chain\n"
+            "  \"height\" : n,                    (numeric) the block height or index\n"
+            "  \"version\" : n,                   (numeric) the block version\n"
+            "  \"merkleroot\" : \"xxxx\",         (string) the merkle root\n"
+            "  \"time\" : ttt,                    (numeric) the block time expressed in seconds\n"
+            "  \"nonce\" : n,                     (numeric) the nonce\n"
+            "  \"solution\" : \"data\",           (string) \n"
+            "  \"bits\" : \"hex\",                (string) the bits\n"
+            "  \"difficulty\" : xxxx,             (numeric) the difficulty\n"
+            "  \"chainwork\"  : \"hex\",          (string) txpected number of hashes required to produce the chain up to this block (in hex)\n"
+            "  \"previousblockhash\" : \"hash\",  (string, optional) the hash of the previous block (if available)\n"
+            "  \"nextblockhash\" : \"hash\"       (string, optional) the hash of the next block (if available)\n"
             "}\n"
             "\nResult (for verbose=false):\n"
-            "\"data\"             (string) A string that is serialized, hex-encoded data for block 'hash'.\n"
+            "\"data\"                             (string) A string that is serialized, hex-encoded data for block 'hash'.\n"
             "\nExamples:\n"
-            + HelpExampleCli("getblockheader", "\"00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09\"")
-            + HelpExampleRpc("getblockheader", "\"00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09\"")
+            + HelpExampleCli("getblockheader", "\"hash\"")
+            + HelpExampleRpc("getblockheader", "\"hash\"")
         );
 
     LOCK(cs_main);
@@ -453,42 +455,53 @@ UniValue getblock(const UniValue& params, bool fHelp)
             "If verbosity is 1, returns an Object with information about the block.\n"
             "If verbosity is 2, returns an Object with information about the block and information about each transaction. \n"
             "\nArguments:\n"
-            "1. \"hash|height\"     (string, required) The block hash or height\n"
-            "2. verbosity              (numeric, optional, default=1) 0 for hex encoded data, 1 for a json object, and 2 for json object with transaction data\n"
-            "\nResult (for verbosity = 0):\n"
-            "\"data\"             (string) A string that is serialized, hex-encoded data for block 'hash'.\n"
-            "\nResult (for verbosity = 1):\n"
+            "1. \"hash|height\"                    (string, required) the block hash or height\n"
+             "2. verbosity                         (numeric, optional, default=1) 0 for hex encoded data, 1 for a json object, and 2 for json object with transaction data,\n"
+            "also accept boolean for backward compatibility where true=1 and false=0\n"
+            "\nResult (for verbose = 1):\n"
             "{\n"
-            "  \"hash\" : \"hash\",       (string) the block hash (same as provided hash)\n"
-            "  \"confirmations\" : n,   (numeric) The number of confirmations, or -1 if the block is not on the main chain\n"
-            "  \"size\" : n,            (numeric) The block size\n"
-            "  \"height\" : n,          (numeric) The block height or index (same as provided height)\n"
-            "  \"version\" : n,         (numeric) The block version\n"
-            "  \"merkleroot\" : \"xxxx\", (string) The merkle root\n"
-            "  \"tx\" : [               (array of string) The transaction ids\n"
-            "     \"transactionid\"     (string) The transaction id\n"
+            "  \"hash\" : \"hash\",                 (string) the block hash (same as provided hash)\n"
+            "  \"confirmations\" : n,               (numeric) the number of confirmations, or -1 if the block is not on the main chain\n"
+            "  \"size\" : n,                        (numeric) the block size\n"
+            "  \"height\" : n,                      (numeric) the block height or index (same as provided height)\n"
+            "  \"version\" : n,                     (numeric) the block version\n"
+            "  \"merkleroot\" : \"xxxx\",           (string) the merkle root\n"
+            "  \"tx\" : [                           (array of string) the transaction ids\n"
+            "     \"transactionid\" : \"hash\",     (string) the transaction id\n"
             "     ,...\n"
             "  ],\n"
-            "  \"time\" : ttt,          (numeric) The block time in seconds since epoch (Jan 1 1970 GMT)\n"
-            "  \"nonce\" : n,           (numeric) The nonce\n"
-            "  \"bits\" : \"1d00ffff\",   (string) The bits\n"
-            "  \"difficulty\" : x.xxx,  (numeric) The difficulty\n"
-            "  \"previousblockhash\" : \"hash\",  (string) The hash of the previous block\n"
-            "  \"nextblockhash\" : \"hash\"       (string) The hash of the next block\n"
+            "  \"time\" : ttt,                      (numeric) the block time in seconds since epoch (Jan 1 1970 GMT)\n"
+            "  \"nonce\" : n,                       (numeric) the nonce\n"
+            "  \"bits\" : \"hex\",                  (string) the bits\n"
+            "  \"difficulty\" : xxxx,               (numeric) the difficulty\n"
+            "  \"chainwork\"  : \"hex\",            (string) txpected number of hashes required to produce the chain up to this block (in hex)\n"
+            "  \"anchor\" : \"hex\",                (string) the anchor\n"
+            "  \"valuePools\" : [                   (array) value pools\n"
+            "      \"id\" : \"sprout\"|\"sapling\", (string)"
+            "      \"monitored\" : true|false,      (boolean)"
+            "      \"chainValue\" : n.nnn,          (numeric)"
+            "      \"chainValueZat\" : n,           (numeric)"
+            "      \"valueDelta\": n.nnn,           (numeric)"
+            "      \"valueDeltaZat\" : n            (numeric)"
+            "  ],\n"
+            "  \"previousblockhash\" : \"hash\",    (string, optional) the hash of the previous block (if available)\n"
+            "  \"nextblockhash\" : \"hash\"         (string, optional) the hash of the next block (if available)\n"
             "}\n"
+            "\nResult (for verbose=0):\n"
+            "\"data\"                               (string) a string that is serialized, hex-encoded data for block 'hash'\n"
             "\nResult (for verbosity = 2):\n"
             "{\n"
-            "  ...,                     Same output as verbosity = 1.\n"
-            "  \"tx\" : [               (array of Objects) The transactions in the format of the getrawtransaction RPC.\n"
+            "  ...,                     same output as verbosity = 2\n"
+            "  \"tx\" : [                           (array of Objects) the transactions in the format of the getrawtransaction RPC\n"
             "         ,...\n"
             "  ],\n"
-            "  ,...                     Same output as verbosity = 1.\n"
+            "  ,...                     same output as verbosity = 1\n"
             "}\n"
             "\nExamples:\n"
-            + HelpExampleCli("getblock", "\"00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09\"")
-            + HelpExampleRpc("getblock", "\"00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09\"")
-            + HelpExampleCli("getblock", "12800")
-            + HelpExampleRpc("getblock", "12800")
+            + HelpExampleCli("getblock", "\"hash\"")
+            + HelpExampleRpc("getblock", "\"hash\"")
+            + HelpExampleCli("getblock", "height")
+            + HelpExampleRpc("getblock", "height")
         );
 
     LOCK(cs_main);
@@ -564,13 +577,13 @@ UniValue gettxoutsetinfo(const UniValue& params, bool fHelp)
             "Note this call may take some time.\n"
             "\nResult:\n"
             "{\n"
-            "  \"height\":n,     (numeric) The current block height (index)\n"
-            "  \"bestblock\": \"hex\",   (string) the best block hash hex\n"
-            "  \"transactions\": n,      (numeric) The number of transactions\n"
-            "  \"txouts\": n,            (numeric) The number of output transactions\n"
-            "  \"bytes_serialized\": n,  (numeric) The serialized size\n"
-            "  \"hash_serialized\": \"hash\",   (string) The serialized hash\n"
-            "  \"total_amount\": x.xxx          (numeric) The total amount\n"
+            "  \"height\":n,                    (numeric) the current block height (index)\n"
+            "  \"bestblock\": \"hex\",          (string) the best block hash hex\n"
+            "  \"transactions\": n,             (numeric) the number of transactions\n"
+            "  \"txouts\": n,                   (numeric) the number of output transactions\n"
+            "  \"bytes_serialized\": n,         (numeric) the serialized size\n"
+            "  \"hash_serialized\": \"hash\",   (string) the serialized hash\n"
+            "  \"total_amount\": xxxx           (numeric) the total value of the utxo set\n"
             "}\n"
             "\nExamples:\n"
             + HelpExampleCli("gettxoutsetinfo", "")
@@ -600,26 +613,26 @@ UniValue gettxout(const UniValue& params, bool fHelp)
             "gettxout \"txid\" n ( includemempool )\n"
             "\nReturns details about an unspent transaction output.\n"
             "\nArguments:\n"
-            "1. \"txid\"       (string, required) The transaction id\n"
-            "2. n              (numeric, required) vout value\n"
-            "3. includemempool  (boolean, optional) Whether to included the mem pool\n"
+            "1. \"txid\"                     (string, required) the transaction id\n"
+            "2. n                            (numeric, required) vout value\n"
+            "3. includemempool               (boolean, optional) whether to included the mempool\n"
             "\nResult:\n"
             "{\n"
-            "  \"bestblock\" : \"hash\",    (string) the block hash\n"
-            "  \"confirmations\" : n,       (numeric) The number of confirmations\n"
-            "  \"value\" : x.xxx,           (numeric) The transaction value in " + CURRENCY_UNIT + "\n"
-            "  \"scriptPubKey\" : {         (json object)\n"
-            "     \"asm\" : \"code\",       (string) \n"
-            "     \"hex\" : \"hex\",        (string) \n"
-            "     \"reqSigs\" : n,          (numeric) Number of required signatures\n"
-            "     \"type\" : \"pubkeyhash\", (string) The type, eg pubkeyhash\n"
+            "  \"bestblock\" : \"hash\",     (string) the block hash\n"
+            "  \"confirmations\" : n,        (numeric) the number of confirmations\n"
+            "  \"value\" : xxxx,             (numeric) the transaction value in " + CURRENCY_UNIT + "\n"
+            "  \"scriptPubKey\" : {          (json object)\n"
+            "     \"asm\" : \"code\",        (string) \n"
+            "     \"hex\" : \"hex\",         (string) \n"
+            "     \"reqSigs\" : n,           (numeric) number of required signatures\n"
+            "     \"type\" : \"pubkeyhash\", (string) the type, eg pubkeyhash\n"
             "     \"addresses\" : [          (array of string) array of Horizen addresses\n"
-            "        \"horizenaddress\"        (string) Horizen address\n"
+            "        \"horizenaddress\"      (string) Horizen address\n"
             "        ,...\n"
             "     ]\n"
             "  },\n"
-            "  \"version\" : n,              (numeric) The version\n"
-            "  \"coinbase\" : true|false     (boolean) Coinbase or not\n"
+            "  \"version\" : n,              (numeric) the version\n"
+            "  \"coinbase\" : true|false     (boolean) coinbase or not\n"
             "}\n"
 
             "\nExamples:\n"
@@ -685,10 +698,10 @@ UniValue verifychain(const UniValue& params, bool fHelp)
             "verifychain ( checklevel numblocks )\n"
             "\nVerifies blockchain database.\n"
             "\nArguments:\n"
-            "1. checklevel   (numeric, optional, 0-4, default=3) How thorough the block verification is.\n"
-            "2. numblocks    (numeric, optional, default=288, 0=all) The number of blocks to check.\n"
+            "1. checklevel    (numeric, optional, 0-4, default=3) how thorough the block verification is (0=least amount of checks, higher levels are clamped to the highest supported level)\n"
+            "2. numblocks     (numeric, optional, default=288, 0=all) the number of blocks starting from the end of the chain to verify\n"
             "\nResult:\n"
-            "true|false       (boolean) Verified or not\n"
+            "true|false       (boolean) verified or not\n"
             "\nExamples:\n"
             + HelpExampleCli("verifychain", "")
             + HelpExampleRpc("verifychain", "")
@@ -744,27 +757,45 @@ UniValue getblockchaininfo(const UniValue& params, bool fHelp)
             "Returns an object containing various state info regarding block chain processing.\n"
             "\nResult:\n"
             "{\n"
-            "  \"chain\": \"xxxx\",        (string) current network name as defined in BIP70 (main, test, regtest)\n"
-            "  \"blocks\": xxxxxx,         (numeric) the current number of blocks processed in the server\n"
-            "  \"headers\": xxxxxx,        (numeric) the current number of headers we have validated\n"
-            "  \"bestblockhash\": \"...\", (string) the hash of the currently best block\n"
-            "  \"difficulty\": xxxxxx,     (numeric) the current difficulty\n"
-            "  \"verificationprogress\": xxxx, (numeric) estimate of verification progress [0..1]\n"
-            "  \"chainwork\": \"xxxx\"     (string) total amount of work in active chain, in hexadecimal\n"
-            "  \"commitments\": xxxxxx,    (numeric) the current number of note commitments in the commitment tree\n"
-            "  \"softforks\": [            (array) status of softforks in progress\n"
+            "  \"chain\": \"xxxx\",                (string) current network name (main, test, regtest)\n"
+            "  \"blocks\": xxxxxx,                 (numeric) the height of the most-work fully-validated chain. The genesis block has height 0\n"
+            "  \"headers\": xxxxxx,                (numeric) the current number of headers we have validated\n"
+            "  \"bestblockhash\": \"hash\",        (string) the hash of the currently best block\n"
+            "  \"difficulty\": xxxxxx,             (numeric) the current difficulty\n"
+            "  \"verificationprogress\": xxxx,     (numeric) estimate of verification progress [0..1]\n"
+            "  \"chainwork\": \"hex\",             (string) total amount of work in active chain, in hexadecimal\n"
+            "  \"pruned\" : true|false,            (boolean) if the blocks are subject to pruning\n"
+            "  \"commitments\": xxxxxx,            (numeric) the current number of note commitments in the commitment tree\n"
+            "  \"valuePools\" : [                  (array) value pools\n"
+            "      \"id\" : \"sprout\"|\"sapling\" (string)"
+            "      \"monitored\" : true|false      (boolean)"
+            "      \"chainValue\" : n.nnn          (numeric)"
+            "      \"chainValueZat\" : n           (numeric)"
+            "      \"valueDelta\": n.nnn           (numeric)"
+            "      \"valueDeltaZat\" : n           (numeric)"
+            "  ],\n"
+            "  \"softforks\": [                    (array) status of softforks in progress\n"
             "     {\n"
-            "        \"id\": \"xxxx\",        (string) name of softfork\n"
-            "        \"version\": xx,         (numeric) block version\n"
-            "        \"enforce\": {           (object) progress toward enforcing the softfork rules for new-version blocks\n"
-            "           \"status\": xx,       (boolean) true if threshold reached\n"
-            "           \"found\": xx,        (numeric) number of blocks with the new version found\n"
-            "           \"required\": xx,     (numeric) number of blocks required to trigger\n"
-            "           \"window\": xx,       (numeric) maximum size of examined window of recent blocks\n"
+            "        \"id\": \"xxxx\",             (string) name of softfork\n"
+            "        \"version\": xx,              (numeric) block version\n"
+            "        \"enforce\": {                (object) progress toward enforcing the softfork rules for new-version blocks\n"
+            "           \"status\": xx,            (boolean) true if threshold reached\n"
+            "           \"found\": xx,             (numeric) number of blocks with the new version found\n"
+            "           \"required\": xx,          (numeric) number of blocks required to trigger\n"
+            "           \"window\": xx,            (numeric) maximum size of examined window of recent blocks\n"
             "        },\n"
-            "        \"reject\": { ... }      (object) progress toward rejecting pre-softfork blocks (same fields as \"enforce\")\n"
+            "        \"reject\": {                 (object) progress toward rejecting pre-softfork blocks (same fields as \"enforce\")\n"
+            "            \"status\" : true|false   (boolean) true if threshold reached\n"
+            "             ... }\n"
             "     }, ...\n"
             "  \n"
+            "  ],\n"
+            "  \"bip9_softforks\": {               (object) status of BIP9 softforks in progress\n"
+            "  \"xxxx\" : {                        (string) name of the softfork\n"
+            "      \"status\": \"xxxx\",           (string) one of \"defined\", \"started\", \"lockedin\", \"active\", \"failed\"\n"
+            "      \"bit\": xx,                    (numeric) the bit, 0-28, in the block version field used to signal this soft fork\n"
+            "      \"startTime\": xx,              (numeric) the minimum median time past of a block at which the bit gains its meaning\n"
+            "       \"timeout\": xx                (numeric) the median time past of a block at which the deployment is considered failed if not yet locked in\n"
             "}\n"
             "\nExamples:\n"
             + HelpExampleCli("getblockchaininfo", "")
@@ -818,29 +849,29 @@ UniValue getchaintips(const UniValue& params, bool fHelp)
     if (fHelp || params.size() != 0)
         throw runtime_error(
             "getchaintips\n"
-            "Return information about all known tips in the block tree,"
+            "Returns about all known chain tips the in the block tree.,"
             " including the main chain as well as orphaned branches.\n"
             "\nResult:\n"
             "[\n"
             "  {\n"
             "    \"height\": xxxx,         (numeric) height of the chain tip\n"
-            "    \"hash\": \"xxxx\",         (string) block hash of the tip\n"
-            "    \"branchlen\": 0          (numeric) zero for main chain\n"
-            "    \"status\": \"active\"      (string) \"active\" for the main chain\n"
+            "    \"hash\": \"hash\",       (string) block hash of the tip\n"
+            "    \"branchlen\": 0,         (numeric) zero for main chain\n"
+            "    \"status\": \"active\"    (string) \"active\" for the main chain\n"
             "  },\n"
             "  {\n"
             "    \"height\": xxxx,\n"
-            "    \"hash\": \"xxxx\",\n"
-            "    \"branchlen\": 1          (numeric) length of branch connecting the tip to the main chain\n"
-            "    \"status\": \"xxxx\"        (string) status of the chain (active, valid-fork, valid-headers, headers-only, invalid)\n"
+            "    \"hash\": \"hash\",\n"
+            "    \"branchlen\": 1,          (numeric) length of branch connecting the tip to the main chain\n"
+            "    \"status\": \"xxxx\"      (string) status of the chain (active, valid-fork, valid-headers, headers-only, invalid)\n"
             "  }\n"
             "]\n"
             "Possible values for status:\n"
-            "1.  \"invalid\"               This branch contains at least one invalid block\n"
-            "2.  \"headers-only\"          Not all blocks for this branch are available, but the headers are valid\n"
-            "3.  \"valid-headers\"         All blocks are available for this branch, but they were never fully validated\n"
-            "4.  \"valid-fork\"            This branch is not part of the active chain, but is fully validated\n"
-            "5.  \"active\"                This is the tip of the active main chain, which is certainly valid\n"
+            "1.  \"invalid\"               this branch contains at least one invalid block\n"
+            "2.  \"headers-only\"          not all blocks for this branch are available, but the headers are valid\n"
+            "3.  \"valid-headers\"         all blocks are available for this branch, but they were never fully validated\n"
+            "4.  \"valid-fork\"            this branch is not part of the active chain, but is fully validated\n"
+            "5.  \"active\"                this is the tip of the active main chain, which is certainly valid\n"
             "\nExamples:\n"
             + HelpExampleCli("getchaintips", "")
             + HelpExampleRpc("getchaintips", "")
@@ -925,9 +956,9 @@ UniValue getmempoolinfo(const UniValue& params, bool fHelp)
             "\nReturns details on the active state of the TX memory pool.\n"
             "\nResult:\n"
             "{\n"
-            "  \"size\": xxxxx                (numeric) Current tx count\n"
-            "  \"bytes\": xxxxx               (numeric) Sum of all tx sizes\n"
-            "  \"usage\": xxxxx               (numeric) Total memory usage for the mempool\n"
+            "  \"size\": xxxxx                (numeric) current tx count\n"
+            "  \"bytes\": xxxxx               (numeric) sum of all tx sizes\n"
+            "  \"usage\": xxxxx               (numeric) total memory usage for the mempool\n"
             "}\n"
             "\nExamples:\n"
             + HelpExampleCli("getmempoolinfo", "")
@@ -946,9 +977,10 @@ UniValue invalidateblock(const UniValue& params, bool fHelp)
             "\nArguments:\n"
             "1. hash   (string, required) the hash of the block to mark as invalid\n"
             "\nResult:\n"
+            "Nothing\n"
             "\nExamples:\n"
-            + HelpExampleCli("invalidateblock", "\"blockhash\"")
-            + HelpExampleRpc("invalidateblock", "\"blockhash\"")
+            + HelpExampleCli("invalidateblock", "\"hash\"")
+            + HelpExampleRpc("invalidateblock", "\"hash\"")
         );
 
     std::string strHash = params[0].get_str();
@@ -985,6 +1017,7 @@ UniValue reconsiderblock(const UniValue& params, bool fHelp)
             "\nArguments:\n"
             "1. hash   (string, required) the hash of the block to reconsider\n"
             "\nResult:\n"
+            "Nothing\n"
             "\nExamples:\n"
             + HelpExampleCli("reconsiderblock", "\"blockhash\"")
             + HelpExampleRpc("reconsiderblock", "\"blockhash\"")
@@ -1301,19 +1334,19 @@ UniValue getscinfo(const UniValue& params, bool fHelp)
     if (fHelp || params.size() == 0 || params.size() > 5)
         throw runtime_error(
             "getscinfo (\"scid\" onlyAlive)\n"
-            "\nArguments:\n"
-            "1. \"scid\"   (string, mandatory) Retrive only information about specified scid, \"*\" means all \n"
-            "2. onlyAlive (bool, optional, default=false) Retrieve only information for alive sidechains\n"
-            "3. verbose   (bool, optional, default=true) If false include only essential info in result\n"
-            "   --- meaningful if scid is not specified:\n"
-            "4. from      (integer, optional, default=0) If set, limit the starting item index (0-base) in the result array to this entry (included)\n"
-            "5. to        (integer, optional, default=-1) If set, limit the ending item index (0-base) in the result array to this entry (excluded) (-1 means max)\n"
             "\nReturns side chain info for the given id or for all of the existing sc if the id is not given.\n"
+            "\nArguments:\n"
+            "1. \"scid\"                                (string, required) retrive only information about specified scid, \"*\" means all \n"
+            "2. onlyAlive                               (bool, optional, default=false) retrieve only information for alive sidechains\n"
+            "3. verbose                                 (bool, optional, default=true) if false include only essential info in result\n"
+            "   --- meaningful if scid is not specified:\n"
+            "4. from                                    (integer, optional, default=0) if set, limit the starting item index (0-base) in the result array to this entry (included)\n"
+            "5. to                                      (integer, optional, default=-1) if set, limit the ending item index (0-base) in the result array to this entry (excluded) (-1 means max)\n"
             "\nResult:\n"
             "{\n"
-            "  \"totalItems\":            xx,      (numeric) number of items found\n"
-            "  \"from\":                  xx,      (numeric) index of the starting item (included in result)\n"
-            "  \"to\":                    xx,      (numeric) index of the ending item (excluded in result)\n"
+            "  \"totalItems\":            xx,           (numeric) number of items found\n"
+            "  \"from\":                  xx,           (numeric) index of the starting item (included in result)\n"
+            "  \"to\":                    xx,           (numeric) index of the ending item (excluded in result)\n"
             "  \"items\":[\n"
             "   {\n"
             "     \"scid\":                    xxxxx,   (string)  sidechain ID\n"
@@ -1328,26 +1361,30 @@ UniValue getscinfo(const UniValue& params, bool fHelp)
             "     \"last certificate epoch\":  xxxxx,   (numeric) last epoch number for which a certificate has been received\n"
             "     \"last certificate hash\":   xxxxx,   (numeric) the hash of the last certificate that has been received\n"
             "     \"withdrawalEpochLength\":   xxxxx,   (numeric) length of the withdrawal epoch\n"
-            "     \"wCertVk\":                 xxxxx,   (string)  The verification key needed to verify a Withdrawal Certificate Proof, set at sc creation\n"
-            "     \"customData\":              xxxxx,   (string)  The arbitrary byte string of custom data set at sc creation\n"
-            "     \"constant\":                xxxxx,   (string)  The arbitrary byte string of constant set at sc creation\n"
-            "     \"wMbtrVk\":                 xxxxx,   (string)  The verification key needed to verify a Mainchain backward transfer request, optionally set at sc creation\n"
-            "     \"wCeasedVk\":               xxxxx,   (string, optional)  The verification key needed to verify a Ceased Sidechain Withdrawal input Proof, set at sc creation\n"
+            "     \"wCertVk\":                 xxxxx,   (string)  the verification key needed to verify a Withdrawal Certificate Proof, set at sc creation\n"
+            "     \"customData\":              xxxxx,   (string)  the arbitrary byte string of custom data set at sc creation\n"
+            "     \"constant\":                xxxxx,   (string)  the arbitrary byte string of constant set at sc creation\n"
+            "     \"wMbtrVk\":                 xxxxx,   (string)  the verification key needed to verify a Mainchain backward transfer request, optionally set at sc creation\n"
+            "     \"wCeasedVk\":               xxxxx    (string, optional)  the verification key needed to verify a Ceased Sidechain Withdrawal input Proof, set at sc creation\n"
             "     \"immature amounts\": [\n"
             "       {\n"
             "         \"maturityHeight\":      xxxxx,   (numeric) height at which fund will become part of spendable balance\n"
-            "         \"amount\":              xxxxx,   (numeric) immature fund\n"
+            "         \"amount\":              xxxxx    (numeric) immature fund\n"
             "       },\n"
             "       ... ]\n"
             "    },\n"
             "    ...\n"
             "  ]\n"
             "}\n"
-
             "\nExamples\n"
+            "\nCLI\n"
             + HelpExampleCli("getscinfo", "\"1a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a874\"")
             + HelpExampleCli("getscinfo", "\"*\" true false 2 10")
-            + HelpExampleCli("getscinfo", "\"*\" ")
+            + HelpExampleCli("getscinfo", "\"*\" ") +
+            "\nRPC\n"
+            + HelpExampleRpc("getscinfo", "\"1a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a874\"")
+            + HelpExampleRpc("getscinfo", "\"*\" true false 2 10")
+            + HelpExampleRpc("getscinfo", "\"*\" ")
         );
 
     bool bRetrieveAllSc = false;
@@ -1423,16 +1460,16 @@ UniValue getactivecertdatahash(const UniValue& params, bool fHelp)
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getactivecertdatahash (\"scid\")\n"
-            "\nArgument:\n"
-            "   \"scid\"   (string, mandatory)  Retrive information about specified scid\n"
             "\nReturns the certificate recent data hash info for the given scid.\n"
+            "\nArgument:\n"
+            "\"scid\"                      (string, required) retrive information about specified scid\n"
             "\nResult:\n"
             "{\n"
-            "  \"certDataHash\":              xxxxx,   (string)  A hex string representation of the field element containing the recent active certificate data hash for the specified scid.\n"
+            "  \"certDataHash\":  xxxxx,   (string) a hex string representation of the field element containing the recent active certificate data hash for the specified scid\n"
             "}\n"
-
             "\nExamples\n"
             + HelpExampleCli("getactivecertdatahash", "\"1a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a874\"")
+            + HelpExampleRpc("getactivecertdatahash", "\"1a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a874\"")
         );
 
     string scIdString = params[0].get_str();
@@ -1457,14 +1494,13 @@ UniValue getscgenesisinfo(const UniValue& params, bool fHelp)
     {
         throw runtime_error(
             "getscgenesisinfo \"scid\"\n"
-            "\nReturns side chain genesis info for the given id or for all of the existing sc if the id is not given.\n"
-            "\n"
+            "\nReturns side chain genesis info for the given id.\n"
             "\nResult:\n"
-            "\"data\"             (string) A string that is serialized, hex-encoded data.\n"
+            "\"data\"   (string) a string that is serialized, hex-encoded data\n"
             // TODO explain the contents
-
             "\nExamples\n"
             + HelpExampleCli("getscgenesisinfo", "\"1a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a874\"")
+            + HelpExampleRpc("getscgenesisinfo", "\"1a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a874\"")
         );
     }
 
@@ -1559,18 +1595,19 @@ UniValue checkcswnullifier(const UniValue& params, bool fHelp)
     if (fHelp || params.size() != 2)
         throw runtime_error(
             "checkcswnullifier\n"
+            "\nReturns True if nullifier exit in the SC.\n"
 			"\nArguments:\n"
-			"1. \"scid\"   (string, mandatory) scid of nullifier, \"*\" means all \n"
-			"2. nullifier (string, mandatory) Retrieve only information for nullifier\n"
-            "\nReturns True if nullifier exit in SC.\n"
+			"1. \"scid\"         (string, required) scid of nullifier, \"*\" means all \n"
+			"2. nullifier        (string, required) retrieve only information for nullifier\n"
             "\nResult:\n"
             "{\n"
-            "  \"data\":            xx,      (bool) existance of nullifier\n"
+            "  \"data\":   xx,   (bool) existance of nullifier\n"
             "}\n"
-
             "\nExamples\n"
             + HelpExampleCli("checkcswnullifier", "\"1a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a874\""
                              "\"0f580d529516a8744de63c578ad83551304c3215f76d204e1a3e7ccbfd40c4e21a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a8740f580d529516a8744de63c578ad83551304c3215f76d204e1a3e7ccbfd40c4e2\"" ) 
+            + HelpExampleRpc("checkcswnullifier", "\"1a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a874\""
+            "\"0f580d529516a8744de63c578ad83551304c3215f76d204e1a3e7ccbfd40c4e21a3e7ccbfd40c4e2304c3215f76d204e4de63c578ad835510f580d529516a8740f580d529516a8744de63c578ad83551304c3215f76d204e1a3e7ccbfd40c4e2\"" ) 
         );
 
     string inputString = params[0].get_str();
@@ -1618,8 +1655,13 @@ UniValue getblockfinalityindex(const UniValue& params, bool fHelp)
         throw runtime_error(
             "getblockfinalityindex \"hash\"\n"
             "\nReturns the minimum number of consecutive blocks a miner should mine from now in order to revert the block of given hash\n"
+            "\nArguments:\n"
+            "1. \"hash\"     (string, required) the block hash\n"
+            "\nResult:\n"
+            "n               (numeric) the minimum number of consecutive blocks a miner should mine from now in order to revert the block\n"
             "\nExamples:\n"
             + HelpExampleCli("getblockfinalityindex", "\"hash\"")
+            + HelpExampleRpc("getblockfinalityindex", "\"hash\"")
         );
     LOCK(cs_main);
 
@@ -1741,8 +1783,15 @@ UniValue getglobaltips(const UniValue& params, bool fHelp)
         throw runtime_error(
             "getglobaltips\n"
             "\nReturns the list of hashes of the tips of all the existing forks\n"
+            "\nResult:\n"
+            "Global tips: n (numeric, global forks tips)\n"
+            "-----------------------\n"
+            "h(n (numeric, block height index)) \"hash\" (string, block hash) onFork[-] time[xxxxx (numeric, time)]\n"
+            "Ordered: ---------------\n"
+            "[\"hash\" (string, block hash) ]\n"
             "\nExamples:\n"
             + HelpExampleCli("getglobaltips", "\"hash\"")
+            + HelpExampleRpc("getglobaltips", "\"hash\"")
         );
     }
     LOCK(cs_main);
@@ -1760,8 +1809,11 @@ UniValue dbg_log(const UniValue& params, bool fHelp)
             "dbg_log\n"
             "\nPrints on debug.log any passed string."
             "\n(Valid only in regtest)\n"
+            "\nResult:\n"
+            "Nothing\n"
             "\nExamples:\n"
             + HelpExampleCli("dbg_log", "\"<log string>\"")
+            + HelpExampleRpc("dbg_log", "\"<log string>\"")
         );
     }
     if (Params().NetworkIDString() != "regtest")
@@ -1782,6 +1834,7 @@ UniValue dbg_do(const UniValue& params, bool fHelp)
             "dbg_do: does some hard coded helper task\n"
             "\nExamples:\n"
             + HelpExampleCli("dbg_do", "\"todo\"")
+            + HelpExampleRpc("dbg_do", "\"todo\"")
         );
     }
     std::string ret = "TODO";
